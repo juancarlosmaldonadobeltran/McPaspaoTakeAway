@@ -51,4 +51,4 @@ Swagger
 Example
 ---
 
-Run the [Postman](https://www.postman.com/) collection [McPaspao Take Away](poc/McPaspao Take Away.postman_collection.json).
+Run the [Postman](https://www.postman.com/) collection [McPaspao Take Away](poc/McPaspao-Take-Away-postman_collection.json).
