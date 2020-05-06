@@ -15,22 +15,22 @@ spring:
     name: order-service
   data:
     mongodb:
-      host: mongodb-order
+      host: localhost:27018
       database: orderservice
   kafka:
     consumer:
-      bootstrap-servers: kafkabroker:9092
+      bootstrap-servers: localhost:9092
       group-id: order-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
-      bootstrap-servers: kafkabroker:9092
+      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 
-info:
-  version: @pom.version@
-  name: @pom.artifactId@
-  timestamp: @build.time@
+#info:
+#  version: @pom.version@
+#  name: @pom.artifactId@
+#  timestamp: @build.time@

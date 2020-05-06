@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "1b85cacd-d006-44e8-a794-100bd717f7cd",
+		"name": "McPaspao Take Away",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create hamburgers on Kitchen",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kitchen/add?hamburgerType=KOBE&quantity=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kitchen",
+						"add"
+					],
+					"query": [
+						{
+							"key": "hamburgerType",
+							"value": "KOBE"
+						},
+						{
+							"key": "quantity",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Kitchen status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kitchen/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kitchen",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order hamburgers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"addressDTO\": {\r\n    \"number\": \"1502\",\r\n    \"street\": \"San Juan\"\r\n  },\r\n  \"cookingType\": \"BLOOD\",\r\n  \"hamburgerList\": [\r\n    {\r\n      \"hamburgerType\": \"KOBE\",\r\n      \"quantity\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/order/view",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"order",
+						"view"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deliveries status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8070/delivery/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"delivery",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

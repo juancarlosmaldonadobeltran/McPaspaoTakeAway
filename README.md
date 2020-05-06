@@ -1,56 +1,54 @@
-McPaspao Take Away
-==================
-[![Build Status](https://travis-ci.org/paspao/McPaspaoTakeAway.svg?branch=master)](https://travis-ci.org/paspao/McPaspaoTakeAway)
+McPaspao Take Away for Windows
+==============================
 
-*Enable Docker 19.x experimental features*
+See the author's article [here](https://paspaola.it/2019/09/25/Microservices-architecture-an-implementation-of-Saga-pattern.html).
 
-Build
------
+See the original repo [here](https://github.com/paspao/McPaspaoTakeAway).
 
-```bash
-docker buildx build --target=order-service -t paspaola/order-service:0.0.1 --load . &&\
-docker buildx build --target=kitchen-service -t paspaola/kitchen-service:0.0.1 --load . &&\
-docker buildx build --target=delivery-service -t paspaola/delivery-service:0.0.1 --load . &&\
-docker buildx build --target=kong-mcpaspao -t paspaola/kong-mcpaspao:0.0.1 --load . 
-```
+Modified to run on Windows without a gateway.
 
-Run
+Prerequisites
 ---
 
-    docker app render -s advertised.addr="your docker host ip" mcpaspao.dockerapp| docker-compose -f - up
+* [OpenJDK](https://adoptopenjdk.net/)
+* [Docker for Windows version 19.03.8](https://docs.docker.com/docker-for-windows/)
+* [Apache Kafka 2.12-2.5.0](https://kafka.apache.org/quickstart) installed in C:\Kafka\kafka_2.12-2.5.0
+
+
+Running on windows
+---
+
+Run the Windows batch [scripts](/poc) in the following order: 
+* [zookeeper-start.bat](/poc/zookeeper-start.bat)
+* [kafka-start.bat](/poc/kafka-start.bat)
+* [mongodb-start.bat](/poc/mongodb-start.bat)
+
+Run the Spring Boot apps:
+* [order-service](order-service/src/main/java/org/paspao/takeaway/order/OrderServiceApplication.java)
+* [kitchen-service](kitchen-service/src/main/java/org/paspao/takeaway/kitchen/KitchenServiceApplication.java)
+* [delivery-service](delivery-service/src/main/java/org/paspao/takeaway/delivery/DeliveryServiceApplication.java)
     
 Stop
 ----
 
-    docker app render mcpaspao.dockerapp| docker-compose -f - down
+Run the Windows batch [scripts](/poc) in the following order: 
+* [kafka-stop.bat](/poc/kafka-stop.bat)
+* [zookeeper-stop.bat](/poc/zookeeper-stop.bat)
+* [mongodb-stop.bat](/poc/mongodb-stop.bat)
+  
+Stop the Spring Boot apps:
+* [order-service](order-service/src/main/java/org/paspao/takeaway/order/OrderServiceApplication.java)
+* [kitchen-service](kitchen-service/src/main/java/org/paspao/takeaway/kitchen/KitchenServiceApplication.java)
+* [delivery-service](delivery-service/src/main/java/org/paspao/takeaway/delivery/DeliveryServiceApplication.java)  
 
-Example
--------
-
+Swagger
+---
 
 * Order Services http://localhost:8090/swagger-ui.html
 * Kitchen Services http://localhost:8080/swagger-ui.html
 * Delivery Services http://localhost:8070/swagger-ui.html
 
+Example
+---
 
-```bash
-curl -X POST "http://localhost:8000/kitchen-service/kitchen/add?hamburgerType=KOBE&quantity=2" -H "accept: application/json"|jq -C && \
- \
-curl -X GET "http://localhost:8000/kitchen-service/kitchen/status" -H "accept: application/json"|jq -C && \
- \
-printf "\n--START--\n" && \
-curl -X POST "http://localhost:8000/order-service/order/create" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"addressDTO\": { \"number\": \"string\", \"street\": \"string\" }, \"cookingType\": \"BLOOD\", \"hamburgerList\": [ { \"hamburgerType\": \"KOBE\", \"quantity\": 2 } ], \"price\": 10}" |jq -C && \
-printf "\n---------\n" && \
- \
-curl -X GET "http://localhost:8000/order-service/order/view" -H "accept: application/json"|jq -C  && sleep 5 && \
-printf "\n---------\n" && \
-curl -X GET "http://localhost:8000/order-service/order/view" -H "accept: application/json"|jq -C && sleep 5 && \
-printf "\n---------\n" && \
-curl -X GET "http://localhost:8000/order-service/order/view" -H "accept: application/json"|jq -C && sleep 5 && \
-printf "\n---------\n" && \
-curl -X GET "http://localhost:8000/order-service/order/view" -H "accept: application/json"|jq -C && \
-printf "\n---------\n" && \
- \
-curl -X GET "http://localhost:8000/delivery-service/delivery/status" -H "accept: application/json"|jq -C && \
-printf "\n--END--\n"
-```
+Run the [Postman](https://www.postman.com/) collection [McPaspao Take Away](poc/McPaspao Take Away.postman_collection.json).
